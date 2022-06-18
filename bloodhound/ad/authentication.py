@@ -80,7 +80,7 @@ class ADAuthentication(object):
         ldaplogin = '%s\\%s' % (self.domain, self.username)
 
         if self.tgt is not None:
-            conn = Connection(server, user=ldaplogin, auto_referrals=False, password=ldappass, authentication=SASL, sasl_mechanism=KERBEROS)
+            conn = Connection(server, user=ldaplogin, auto_referrals=False, password=ldappass, authentication=SASL, sasl_mechanism=KERBEROS, sasl_credentials = (None, ldaplogin, ldappass, None, 'sign'))
             bound = self.ldap_kerberos(conn, hostname)
         else:
             conn = Connection(server, user=ldaplogin, auto_referrals=False, password=ldappass, authentication=NTLM)

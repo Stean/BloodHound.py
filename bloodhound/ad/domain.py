@@ -179,7 +179,7 @@ class ADDC(ADComputer):
                                   search_base="CN=Partitions,%s" % self.ldap.server.info.other['configurationNamingContext'][0])
         except (LDAPAttributeError, LDAPCursorError) as e:
             logging.warning('Could not determine NetBiosname of the domain: %s' % e)
-        return entries.next()
+        return next(entries)
 
 
     def get_domains(self):
@@ -366,7 +366,8 @@ class AD(object):
 
     def realm(self):
         if self.domain is not None:
-            return unicode(self.domain).upper()
+            #return unicode(self.domain).upper()
+            return str(self.domain).upper()
         else:
             return None
 

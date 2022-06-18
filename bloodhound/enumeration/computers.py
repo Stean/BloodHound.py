@@ -21,8 +21,8 @@
 # SOFTWARE.
 #
 ####################
-import Queue
 import threading
+from queue import Queue
 import logging
 import traceback
 from impacket.dcerpc.v5.rpcrt import DCERPCException
@@ -58,9 +58,9 @@ class ComputerEnumerator(MembershipEnumerator):
             Enumerates the computers in the domain. Is threaded, you can specify the number of workers.
             Will spawn threads to resolve computers and enumerate the information.
         """
-        q = Queue.Queue()
+        q = Queue()
 
-        result_q = Queue.Queue()
+        result_q = Queue()
         results_worker = threading.Thread(target=OutputWorker.write_worker, args=(result_q, 'computers.json', 'sessions.json'))
         results_worker.daemon = True
         results_worker.start()
@@ -72,7 +72,7 @@ class ComputerEnumerator(MembershipEnumerator):
             t.daemon = True
             t.start()
 
-        for _, computer in computers.iteritems():
+        for _, computer in computers.items():
             if not 'attributes' in computer:
                 continue
 
